@@ -1,31 +1,37 @@
 class Solution {
 public:
-    
-    bool perm(string a,string b){
-        unordered_map<char,int> map;
-        for(int i=0;i<a.size();i++){
-            map[a[i]]++;
-            map[b[i]]--;
-        }
-        for(auto x:map){
-            if(x.second!=0){
-                return false;
-            }
-        }
-        return true;
-    }
-    
     bool checkInclusion(string s1, string s2) {
         int n=s2.size(),m=s1.size();
-        
         if(m>n){
             return false;
         }
-        
-        for(int i=0;i<=n-m;i++){
-            string temp=s2.substr(i,m);
-            if(perm(s1,temp)){
+        vector<int> a(26,0);
+        for(auto x:s1){
+            a[x-'a']++;
+        }
+        vector<int> b(26,0);
+        int start=0,end=m-1;
+        for(int i=start;i<=end;i++){
+            b[s2[i]-'a']++;
+        }
+        //end++;
+        bool ans=true;
+        while(end<n){
+            ans=true;
+            for(int i=0;i<26;i++){
+                if(a[i]!=b[i]){
+                    ans=false;
+                    break;
+                }
+            }
+            if(ans){
                 return true;
+            }
+            b[s2[start]-'a']--;
+            start++;
+            end++;
+            if(end!=n){
+                b[s2[end]-'a']++;
             }
         }
         return false;
