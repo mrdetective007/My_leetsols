@@ -1,22 +1,25 @@
 class Solution {
 public:
-    bool solve(string s){
-        string temp=s;
-        reverse(temp.begin(),temp.end());
-        return s==temp;
-    }
+    // bool solve(string s){
+    //     string temp=s;
+    //     reverse(temp.begin(),temp.end());
+    //     return s==temp;
+    // }
     int countSubstrings(string s) {
-        int cnt=s.size();
-        for(int i=0;i<s.size();i++){
-            string a="";
-            a+=s[i];
-            for(int j=i+1;j<s.size();j++){
-                a+=s[j];
-                if(solve(a)){
-                    cnt++;
+        vector<vector<int>> tab(s.size(), vector<int>(s.size()));
+        int count = 0;
+        for(int i = s.size() - 1; i >= 0; --i) {
+            for(int j = i; j < s.size(); ++j) {
+                if (i == j) {
+                    tab[i][j] = 1;
+                } else if (i + 1 == j) {
+                    tab[i][j] = s[i] == s[j] ? 1 : 0;
+                } else {
+                    tab[i][j] = s[i] == s[j] ? tab[i+1][j-1] : 0;
                 }
+                count += tab[i][j];
             }
         }
-        return cnt;
+        return count;
     }
 };
