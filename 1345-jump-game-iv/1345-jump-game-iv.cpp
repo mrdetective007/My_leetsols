@@ -1,35 +1,43 @@
 class Solution {
 public:
     int minJumps(vector<int>& arr) {
+        int n=arr.size();
         map<int,vector<int>> mp;
-        for(int i=0;i<arr.size();i++){
+        for(int i=0;i<n;i++){
             mp[arr[i]].push_back(i);
         }
+        queue<pair<int,pair<int,int>>> q;
+        q.push({arr[0],{0,0}});
         int cnt=0;
-        queue<int> q;
-        vector<int> vis(arr.size(),0);
-        vis[0]=1;
-        q.push(0);
+        vector<bool>vis(n,false);
+        vis[0]=true;
         while(!q.empty()){
-            int size=q.size();
-            for(int i=0;i<size;i++){
-                int curr=q.front();
-                q.pop();
-                if(curr==arr.size()-1){
-                    return cnt;
-                }
-                vector<int> &vec=mp[arr[curr]];
-                vec.push_back(curr-1);
-                vec.push_back(curr+1);
+            auto curr=q.front();
+            q.pop();
+            int value=curr.first;
+            int ind=curr.second.first;
+            int steps=curr.second.second;
+            if(ind==n-1){
+                cnt=steps;
+                break;
+            }
+            if(ind-1>0 && !vis[ind-1]){
+                q.push({arr[ind-1],{ind-1,steps+1}});
+                vis[ind-1]=true;
+            }
+            if(ind+1<n && !vis[ind+1]){
+                q.push({arr[ind+1],{ind+1,steps+1}});
+            }
+            if(mp.find(value)!=mp.end()){
+                vector<int> vec=mp[value];
                 for(auto x:vec){
-                    if(x>=0 && x<arr.size() && vis[x]==0){
-                        vis[x]=1;
-                        q.push(x);
+                    if(!vis[x]){
+                        q.push({arr[x],{x,steps+1}});
+                        vis[x]=true;
                     }
                 }
-                vec.clear();
+                mp.erase(value);
             }
-            cnt++;
         }
         return cnt;
     }
