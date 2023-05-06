@@ -1,0 +1,2 @@
+this is an awesome question describing the concept of 2 sum
+we need to find the element from the last with which nums[l] +nums[r] <= target and for all that pairs we need to calculate the powers (2^n) combinations are possible and this we will do for all the pairs !!
