@@ -1,0 +1,2 @@
+Normally apan log jese karte hain wahi karna hain
+simply ekk extra cheeze karni hain ki jaha par bhi aap ')' yeh encounter karte ho toh normally apan log check karte hain ki stck.empty toh nahi hain and then pop that element now in case agar stack empty hain toh fir simply s[i] ko '#'  se replace kar do and then normal string manipulation karna hain and string me wahi element lene hain jo '#' ke barabar nahi hain !!
