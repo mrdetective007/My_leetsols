@@ -1,29 +1,33 @@
 class Solution {
 public:
-    
-    static bool cmp(pair<int,int> a,pair<int,int> b){
-        return a.second>b.second;
-    }
-    
     long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
+        long long ans=INT_MIN;
+        long long sum=0;
         int n=nums1.size();
-        vector<pair<int,int>> vec(n);
-        for(int i=0;i<nums1.size();i++){
-            vec[i]={nums1[i],nums2[i]};
+        priority_queue<pair<int,int>> maxi;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> mini;
+        for(int i=0;i<n;i++){
+            maxi.push({nums1[i],i});
         }
-        sort(vec.begin(),vec.end(),cmp);
-        priority_queue<int> q;
-        long long ans=0,sum=0;
-        for(int i=0;i<k-1;i++){
-            sum+=vec[i].first;
-            q.push(-vec[i].first);
+        while(!maxi.empty() && k>0){
+            auto top=maxi.top();
+            sum+=top.first;
+            mini.push({nums2[top.second],top.second});
+            maxi.pop();
+            k--;
         }
-        for(int i=k-1;i<nums1.size();i++){
-            sum+=vec[i].first;
-            q.push(-vec[i].first);
-            ans=max(ans,(long long)(sum*vec[i].second));
-            sum+=q.top();
-            q.pop();
+        int minim=mini.top().first;
+        ans=max(ans,(long long)(sum*minim));
+        while(!maxi.empty()){
+            auto p=mini.top();
+            sum-=nums1[p.second];
+            mini.pop();
+            auto q=maxi.top();
+            sum+=q.first;
+            mini.push({nums2[q.second],q.second});
+            maxi.pop();
+            minim=mini.top().first;
+            ans=max(ans,(long long)(sum*minim));
         }
         return ans;
     }
