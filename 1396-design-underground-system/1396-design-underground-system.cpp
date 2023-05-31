@@ -1,7 +1,7 @@
 class UndergroundSystem {
 public:
-    map<int,pair<string,int>> m1,m2;
-    map<string,vector<pair<int,int>>> m;
+    unordered_map<int,pair<string,int>> m1,m2;
+    unordered_map<string,vector<pair<int,int>>> m;
     UndergroundSystem() {
         
     }
