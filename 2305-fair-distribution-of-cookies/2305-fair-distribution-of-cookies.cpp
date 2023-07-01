@@ -16,6 +16,9 @@ public:
             vec[p]+=nums[i];
             solve(vec,nums,k,i+1);
             vec[p]-=nums[i];
+            if(vec[p]==0){
+                return;
+            }
         }
         return;
     }
