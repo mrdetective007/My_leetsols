@@ -9,10 +9,10 @@ public:
             if(s.empty()){
                 nsl.push_back(-1);
             }
-            else if(!s.empty() && s.top().first<=heights[i]){
+            else if(!s.empty() && s.top().first<heights[i]){
                 nsl.push_back(s.top().second);
             }else{
-                while(!s.empty() && s.top().first>heights[i]){
+                while(!s.empty() && s.top().first>=heights[i]){
                     s.pop();
                 }
                 if(s.empty()){
