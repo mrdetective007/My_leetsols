@@ -1,26 +1,52 @@
 class Solution {
 public:
     bool buddyStrings(string s, string goal) {
-        int n=s.size(),m=goal.size();
-        if(n!=m){
+        int arr[26]={0};
+        for(int i=0;i<s.length();i++)
+        {
+            arr[s[i]-'a']++;
+        }
+        for(int i=0;i<goal.length();i++)
+        {
+            arr[goal[i]-'a']--;
+        }
+        
+        for(int i:arr)
+        {
+            if(i!=0){return false;}
+        }
+        int first=-1,second=-1;
+        int count=0;
+        for(int i=0;i<s.length();i++)
+        {
+            if(s[i]!=goal[i])
+            {
+                if(count==0){first=i;count++;}
+                else if(count==1){second=i;count++;}
+                else if(count==2){return false;}
+            }
+        }
+        if(count==0) 
+        {
+            for(int i=0;i<s.length();i++)
+            {
+                arr[s[i]-'a']++;
+            }
+            for(int i:arr)
+            {
+                if(i>=2){return true;}
+            }   
             return false;
         }
-        set<char> ss;
-        for(auto x:s){
-            ss.insert(x);
+        else
+        {
+            char temp=s[first];
+            s[first]=s[second];
+            s[second]=temp;
+            if(s==goal){return true;}
+            return false;
         }
-        if(s==goal && ss.size()<m){
-            return true;
-        }
-        vector<int> d;
-        for(int i=0;i<n;i++){
-            if(s[i]!=goal[i]){
-                d.push_back(i);
-            }
-            if(d.size()>2){
-                return false;
-            }
-        }
-        return d.size()==2 && s[d[0]]==goal[d[1]] && s[d[1]]==goal[d[0]];
+        return true;
+        
     }
 };
