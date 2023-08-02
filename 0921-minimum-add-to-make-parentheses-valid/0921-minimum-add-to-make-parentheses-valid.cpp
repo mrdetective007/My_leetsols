@@ -1,15 +1,21 @@
 class Solution {
 public:
     int minAddToMakeValid(string s) {
-        stack<char> stck;
-        stck.push(s[0]);
-        for(int i=1;i<s.size();i++){
-            if(!stck.empty() && s[i]==')' && stck.top()=='('){
-                stck.pop();
+        int open=0;
+        int cnt=0;
+        for(auto x:s){
+            cout<<open<<endl;
+            if(x=='('){
+                open++;
             }else{
-                stck.push(s[i]);
+                open--;
+            }
+            if(open<0){
+                cnt+=abs(open);
+                open=0;
             }
         }
-        return stck.size();
+        cnt+=abs(open);
+        return cnt;
     }
 };
