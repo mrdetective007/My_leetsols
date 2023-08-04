@@ -1,19 +1,19 @@
 class Solution {
 private:
-    bool wordBreak(string s, unordered_set<string> &set, vector<int> &memo, int start){
-        if(start == s.size()){
+    bool wordBreak(string s, unordered_set<string> &set, vector<int> &memo, int j){
+        if(j == s.size()){
             return true;
         }
-        if(memo[start] != -1){
-            return memo[start];
+        if(memo[j] != -1){
+            return memo[j];
         }
-        for(int i=start; i<s.size(); i++){
-            if(set.count(s.substr(start, i+1-start)) && wordBreak(s, set, memo, i+1)){
-                memo[start] = true;
+        for(int i=j; i<s.size(); i++){
+            if(set.count(s.substr(j, i-j+1)) && wordBreak(s, set, memo, i+1)){
+                memo[j] = true;
                 return true;
             }
         }
-        return memo[start] = false;
+        return memo[j] = false;
     }
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
