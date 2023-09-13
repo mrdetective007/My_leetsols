@@ -13,10 +13,10 @@ public:
                 right[i]=1+right[i+1];
             }
         }
-        int tot=0;
+        int cnt=0;
         for(int i=0;i<n;i++){
-            tot+=max(left[i],right[i]);
+            cnt+=max(left[i],right[i]);
         }
-        return tot;
+        return cnt;
     }
 };
