@@ -1,38 +1,37 @@
 class Solution {
 public:
-    vector<double> dijkstra(int i, vector<pair<int,double>> adj[], vector<bool> processed, int n){
-        vector<double> distance(n,0);
-        distance[i] = 1.0;
+    
+    double dij(int n, int s, int e, vector<pair<int,double>> adj[]){
+        vector<double> dis(n,0);
+        dis[s]=1;
+        vector<bool> mark(n,false);
         priority_queue<pair<double,int>> pq;
-        pq.push({1.0,i});
+        pq.push({dis[s],s});
         while(!pq.empty()){
-            int a = pq.top().second;
+            auto x=pq.top();
             pq.pop();
-            if(processed[a] == true){
+            if(mark[x.second]){
                 continue;
             }
-            processed[a] = true;
-            for(auto x:adj[a]){
-                int b;
-                double w;
-                b = x.first;
-                w = x.second;
-                if(distance[b]<distance[a]*w){
-                    distance[b] = distance[a]*w;
-                    pq.push({distance[b],b});
+            mark[x.second]=true;
+            for(auto y:adj[x.second]){
+                if(dis[y.first]<dis[x.second]*y.second){
+                    dis[y.first]=dis[x.second]*y.second;
+                    pq.push({dis[y.first],y.first});
                 }
             }
         }
-        return distance;
+        return dis[e];
     }
-    double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start, int end) {
+    
+    
+    double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start_node, int end_node) {
         vector<pair<int,double>> adj[n];
-        for(int i=0; i<edges.size(); i++){
+        for(int i=0;i<edges.size();i++){
             adj[edges[i][0]].push_back({edges[i][1],succProb[i]});
             adj[edges[i][1]].push_back({edges[i][0],succProb[i]});
         }
-        vector<bool> processed(n,false);
-        vector<double> vec = dijkstra(start,adj,processed,n);
-        return vec[end];
+        double ans=dij(n,start_node,end_node,adj);
+        return ans;
     }
 };
