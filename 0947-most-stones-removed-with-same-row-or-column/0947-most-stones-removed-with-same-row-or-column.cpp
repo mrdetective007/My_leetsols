@@ -30,13 +30,6 @@ public:
                 }
             }
         }
-        // for(int i=0;i<n;i++){
-        //     cout<<i<<"->";
-        //     for(auto x:adj[i]){
-        //         cout<<x<<",";
-        //     }
-        //     cout<<endl;
-        // }
         int res=0;
         for(int i=0;i<n;i++){
             int cnt=0;
@@ -46,8 +39,6 @@ public:
                 res+=cnt;
             }
         }
-        // dfs(0,cnt,adj,vis);
-        // return --cnt;
         return res;
     }
 };
