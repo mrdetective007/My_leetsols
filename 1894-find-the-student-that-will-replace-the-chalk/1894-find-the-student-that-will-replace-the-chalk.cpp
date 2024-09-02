@@ -13,7 +13,6 @@ public:
                 break;
             }
             k-=chalk[i%n];
-            // cout<<k<<endl;
             i++;
         }
         return i%n;
