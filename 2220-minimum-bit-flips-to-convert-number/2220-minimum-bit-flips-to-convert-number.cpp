@@ -1,22 +1,17 @@
 class Solution {
 public:
     int minBitFlips(int start, int goal) {
-        string s(32,0), g(32,0);
-        int i=31;
-        while(start>0){
-            s[i--]=start%2;
-            start/=2;
-        }
-        i=31;
-        while(goal>0){
-            g[i--]=goal%2;
-            goal/=2;
-        }
+        /*
+            The question asks for the number of places where the bit is differing
+            Now, once you do xor of both the numbers, the number of places where
+            1 occurs denotes the number of places where the bit differs,
+            so, basically have to calculate the differing positions
+        */
+        int x=start^goal;
         int cnt=0;
-        for(int i=0;i<32;i++){
-            if(s[i]!=g[i]){
-                cnt++;
-            }
+        while(x!=0){
+            cnt+=x&1;
+            x>>=1;//shifting the bit one position right
         }
         return cnt;
     }
