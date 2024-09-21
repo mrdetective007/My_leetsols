@@ -1,20 +1,23 @@
 class Solution {
 public:
-    
-    static bool cmp(string a, string b){
-        return a<b;
-    }
-    
     vector<int> lexicalOrder(int n) {
-        vector<string> vec;
-        for(int i=1;i<=n;i++){
-            vec.push_back(to_string(i));
+        vector<int> vec(n);
+        int cur=1;
+        for(int i=0;i<n;i++){
+            vec[i]=cur;
+            if((cur*10)<=n){
+                cur*=10;
+            }
+            else{
+                if(cur>=n){
+                    cur/=10;
+                }
+                cur++;
+                while(cur%10==0){
+                    cur/=10;
+                }
+            }
         }
-        sort(vec.begin(),vec.end(),cmp);
-        vector<int> ans;
-        for(auto x:vec){
-            ans.push_back(stoi(x));
-        }
-        return ans;
+        return vec;
     }
 };
